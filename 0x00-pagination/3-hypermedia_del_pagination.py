@@ -39,6 +39,19 @@ class Server:
             }
         return self.__indexed_dataset
 
+    def get_hyper(self, page: int = 1, page_size: int = 10) -> dict:
+        """A method that takes the same arguments (and defaults) as get_page
+        and returns a dictionary containing the following key-value pairs."""
+        total_pages = math.ceil(len(self.get_page()) / page_size)
+        return {
+            'page_size': len(self.get_page(page, page_size)),
+            'page': page,
+            'data': self.get_page(page, page_size),
+            'next_page': page + 1 if page < total_pages else None,
+            'prev_page': page - 1 if page > 1 else None,
+            'total_pages': total_pages
+        }
+
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
         """A method that takes two integer arguments page with default value 1
         and page_size with default value 10."""
@@ -59,4 +72,3 @@ class Server:
             'page_size': page_size,
             'next_index': next_index
         }
-
