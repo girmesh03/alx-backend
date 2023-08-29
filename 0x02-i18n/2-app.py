@@ -2,11 +2,11 @@
 """
 2-app Module
 
-This module contains the Flask app setup with Babel configuration and locale selector.
+This module contains the Flask app setup with Babel configuration and get_locale function.
 """
 
 from flask import Flask, render_template, request
-from flask_babel import Babel, locale_selector
+from flask_babel import Babel, _
 
 app = Flask(__name__)
 babel = Babel(app)
@@ -27,7 +27,7 @@ app.config.from_object(Config)
 @babel.localeselector
 def get_locale():
     """
-    Get the best-matched locale from the request's accepted languages.
+    Determine the best match for the supported languages based on request.accept_languages.
     """
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
